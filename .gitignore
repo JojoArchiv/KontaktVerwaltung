@@ -161,4 +161,4 @@ cython_debug/
 .dbeaver/
 .project/
 .pydevproject/
-
+gui/
