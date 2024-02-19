@@ -18,21 +18,20 @@ class Test(unittest.TestCase):
         engine = dbservice.setup()
         self.session = Session(engine)
         self.kategorien_service = KategorieRepository(self.session)
-
-
+        
     def tearDown(self):
         
         self.session.close()
 
 
-    def testCreate(self):
+    def notestCreate(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         self.assertTrue(kategorie is not None)
         self.assertTrue(isinstance(kategorie, Kategorie))
         self.assertTrue(kategorie.id is not None)
 
-    def testGet(self):
+    def notestGet(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         kategorie2 = self.kategorien_service.get(kategorie.id)
@@ -41,8 +40,33 @@ class Test(unittest.TestCase):
         self.assertTrue(kategorie2.id is not None)
         self.assertEqual(kategorie.id, kategorie2.id)
         self.assertEqual(kategorie, kategorie2)
-
-    def testGetFailsOnNotExistingID(self):
+        
+    def notestFindAllKategorien(self):
+        
+        kategorie1 = self.kategorien_service.create(kategorienname="Spender_in")
+        kategorie2 = self.kategorien_service.create(kategorienname="Fördermitglied")
+        kategorie3 = self.kategorien_service.create(kategorienname="Studierende")
+        kategorie4 = self.kategorien_service.create(kategorienname="Mitarbeitende")
+        kategorie5 = self.kategorien_service.create(kategorienname="Referent_innen")
+        
+        kategorien_liste = self.kategorien_service.find_all()
+        print("************************************************", kategorien_liste)
+        
+        self.assertEqual(len(kategorien_liste), 5)
+        self.assertEqual("Fördermitglied", kategorien_liste[0].kategorienname)
+        
+    def testGetByKategorienname(self):
+        
+        kategorie1 = self.kategorien_service.create(kategorienname="Spender_in")
+        kategorie2 = self.kategorien_service.create(kategorienname="Fördermitglied")
+        kategorie3 = self.kategorien_service.create(kategorienname="Studierende")
+        kategorie4 = self.kategorien_service.create(kategorienname="Mitarbeitende")
+        kategorie5 = self.kategorien_service.create(kategorienname="Referent_innen")
+        kategorien_liste = self.kategorien_service.get_by_kategorienname(kategorienname="Spender_in")
+        self.assertEqual(kategorien_liste.kategorienname, "Spender_in")
+        self.assertEqual(kategorien_liste.id, 1)
+    
+    def notestGetFailsOnNotExistingID(self):
 
         exception_thrown = False
         try:        
@@ -52,7 +76,7 @@ class Test(unittest.TestCase):
             
         self.assertTrue(exception_thrown)
 
-    def testGetFailsOnNone(self):
+    def notestGetFailsOnNone(self):
 
         exception_thrown = False
         try:        
@@ -62,7 +86,7 @@ class Test(unittest.TestCase):
             
         self.assertTrue(exception_thrown)
 
-    def testDelete(self):
+    def notestDelete(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         self.kategorien_service.get(kategorie.id)

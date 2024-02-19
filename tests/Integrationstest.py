@@ -24,6 +24,7 @@ class IntegrationsTest(unittest.TestCase):
         self.DeleteKontakt()
         self.CreateTwoKontakteAndOneKategorie()
         self.FindBySpendeninformation()
+        self.tear_down_db()
         
     def CreateKontakt(self):
         
@@ -121,7 +122,7 @@ class IntegrationsTest(unittest.TestCase):
 
     def setup_db(self): 
         
-        self.db_file = "C:\\Temp\\database.db"
+        self.db_file = "C:\\Temp\\databasetest.db"
         try:
             os.remove(self.db_file)
         except FileNotFoundError:
@@ -137,7 +138,17 @@ class IntegrationsTest(unittest.TestCase):
         
         return kontakte_repository, kategorien_repository
 
-
+    def tear_down_db(self):
+        
+        self.session.commit()
+        self.session.close()
+        self.engine.dispose()
+      
+        try:
+            os.remove(self.db_file)
+        except FileNotFoundError:
+            pass
+        
     def reopen_session(self):
 
         self.session.commit()

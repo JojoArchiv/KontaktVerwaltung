@@ -51,6 +51,10 @@ class Kategorie(Base):
         self.id:int = None 
         self.kategorienname:str = None 
         
+    def __str__(self):
+        
+        return self.kategorienname
+        
 class Adresse(Base): 
     
     __tablename__ = "adressen"
@@ -164,7 +168,7 @@ class Kontakt(Base):
     
     gender: Mapped[GenderTypes]
     
-    addressen: Mapped[List[Adresse]] = relationship(
+    adressen: Mapped[List[Adresse]] = relationship(
     cascade="all, delete-orphan"
     )
     
