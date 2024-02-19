@@ -201,6 +201,8 @@ class Test(unittest.TestCase):
     def testFindByKategorie(self):
         
         kontakt = self.kontakte_repository.create(gender=GenderTypes.UNKNOWN, nachname="Bäcker")
+        kontakt2 = self.kontakte_repository.create(gender=GenderTypes.UNKNOWN, nachname="Schuster")
+        
         kategorie = self.kategorien_repository.create(kategorienname="Testkategorie")
         self.kontakte_repository.addKategorie(kontakt,kategorie)
         
