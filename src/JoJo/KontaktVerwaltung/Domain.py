@@ -8,7 +8,7 @@ from sqlalchemy.orm._orm_constructors import mapped_column, relationship
 from typing import List
 from typing import Optional
 from sqlalchemy.sql.sqltypes import BOOLEAN, Integer
-from sqlalchemy.sql.schema import ForeignKey, Column, Table
+from sqlalchemy.sql.schema import ForeignKey, Column, Table, UniqueConstraint
 from sqlalchemy.orm.decl_api import DeclarativeBase
 import enum
 
@@ -42,6 +42,7 @@ class Kategorie(Base):
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     kategorienname: Mapped[str]
+    __table_args__ = (UniqueConstraint("kategorienname", name="kateogrienname_unique"),)
     
     def __repr__(self) -> str:
         return f"Kategorie(id={self.id!r}, kategorienname={self.kategorienname!r})"

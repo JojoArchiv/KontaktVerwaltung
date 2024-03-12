@@ -2,11 +2,11 @@ import unittest
 from unittest.mock import MagicMock
 from JoJo.KontaktVerwaltung.Services import KategorieRepository,\
     KontakteRepository, Page
-from JoJo.KontaktVerwaltung.Domain import Kategorie, Kontakt
+from JoJo.KontaktVerwaltung.Domain import Kategorie, Kontakt, GenderTypes
 from mock.mock import Mock, call
 from JoJo.KontaktVerwaltung.Main import Controller
 from PySide6.QtWidgets import QComboBox, QApplication, QTableWidget,\
-    QTableWidgetItem, QLineEdit
+    QTableWidgetItem, QLineEdit, QDialog, QRadioButton
 
 
 class MainMockTest(unittest.TestCase):
@@ -25,7 +25,6 @@ class MainMockTest(unittest.TestCase):
         
     def setUp(self):
         
-        self.controller = Controller
         self.kategorien_combo_box = QComboBox()
         self.searchFeld = MagicMock()
         
@@ -56,7 +55,7 @@ class MainMockTest(unittest.TestCase):
 
     def test_find_all(self):
         
-        self.controller.fill_kategorie_dropdown(self.kategorien_combo_box)
+        self.controller.fill_kategorie_dropdown(self.kategorien_combo_box, add_kein_eintrag=True)
         self.assertEqual(6, self.kategorien_combo_box.count())
         self.assertEqual(self.kategorien_combo_box.itemText(0), "Kein Eintrag")
         self.assertEqual(self.kategorien_combo_box.itemText(5), "Referent_innen")
@@ -77,8 +76,8 @@ class MainMockTest(unittest.TestCase):
         
         self.searchFeld.text("Müller")
         
-        self.controller.fill_kategorie_dropdown(self.kategorien_combo_box)
-        self.kategorien_combo_box.setCurrentText(Controller.KEINE_KATEGORIE)
+        self.controller.fill_kategorie_dropdown(self.kategorien_combo_box, add_kein_eintrag=True)
+        #self.kategorien_combo_box.setCurrentText(Controller.KEINE_KATEGORIE)
 
         self.controller.execute_search(self.page, self.searchFeld, self.kategorien_combo_box)
         self.kontakte_repository.get_page.assert_called_once()
@@ -142,6 +141,67 @@ class MainMockTest(unittest.TestCase):
         selected_item2 = tablewidget.item(1,1).text()
         self.assertEqual(selected_item2, kontakt2.nachname)
         
+    def test_save_new_kategorie(self):
+        
+        self.lineEdit = MagicMock()
+        
+        self.lineEdit("Kategorie 1")
+        self.controller.save_kategorie(self.lineEdit, self.kategorien_combo_box)
+        self.kategorie_repository.create.assert_called_once()
+        
+    def test_delete_kategorie(self):
+        
+        self.kategorien_combo_box = MagicMock()
+        
+        self.kategorien_combo_box.currentText.return_value = "Kategorie 1"
+        self.controller.delete_kategorie(self.kategorien_combo_box)
+        self.kategorie_repository.delete_by_name.assert_called_once_with("Kategorie 1")
+        
+    def test_kategorie_bearbeiten(self):
+        
+        self.kategorien_combo_box = MagicMock()
+        self.lineEdit = MagicMock()
+        
+        self.controller.bearbeite_kategorie(self.kategorien_combo_box, self.lineEdit)
+        
+    def test_kontakt_anlegen(self):
+        
+        text_inputs = {"nachname": QLineEdit(text="nachname"),
+                "vornamen": QLineEdit(text="vornamen"),
+                "mailadresse": QLineEdit(text="mailadresse"),
+            }
+
+        adresse_inputs = {
+                "strasse": QLineEdit(text="strasse"),
+                "hausnummer": QLineEdit(text="hausnummer"),
+                "wohnort": QLineEdit(text="wohnort"),
+                "plz": QLineEdit(text="plz"),
+                "land": QLineEdit(text="land")
+            }
+        
+        rb1 = QRadioButton()
+        rb1.setChecked(True)
+        rb1.gender = GenderTypes.MALE
+        rb2 = QRadioButton()
+        rb2.setChecked(False)
+        rb2.gender = GenderTypes.FEMALE
+        
+        kontakt = Kontakt()
+        kontakt.id = 42
+        self.kontakte_repository.create.return_value = kontakt
+            
+        self.controller.kontakt_anlegen(text_inputs, adresse_inputs, [rb1, rb2])
+        self.kontakte_repository.create.assert_called_once_with(nachname='nachname',
+                                                                vornamen='vornamen',
+                                                                mailadresse='mailadresse',
+                                                                gender=GenderTypes.MALE)
+        
+        self.kontakte_repository.createAdresse.assert_called_once_with(strasse='strasse',
+                                                                hausnummer='hausnummer',
+                                                                wohnort='wohnort',
+                                                                plz='plz',
+                                                                land='land',
+                                                                kontakt=kontakt)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

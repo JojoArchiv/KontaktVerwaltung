@@ -29,6 +29,10 @@ class IllegalIdException(KontakteException):
             super().__init__("None is not a valid identifier")
         else:
             super().__init__("%d is not a valid identifier" % id)
+            
+class KategorieExistiertBereits(Exception):
+    
+    pass
 
 class RecordOrder(Enum):
     
@@ -105,7 +109,7 @@ class BaseRepository(object):
         self.session.commit()
         
         return class_instance
-        
+    
     def get(self, id:int):
         
         stmt = select(self.repository_class).where(self.repository_class.id == id)
@@ -297,6 +301,28 @@ class KategorieRepository(BaseRepository):
     def __init__(self, session: Session):
         
         super().__init__(session, Kategorie)
+    
+    def create(self, **kwargs):
+        
+        kategorienname = kwargs['kategorienname']
+        try:
+            self.get_by_kategorienname(kategorienname)
+        except AssertionError:
+            return BaseRepository.create(self, **kwargs)
+
+
+        raise KategorieExistiertBereits()
+    
+    def delete_by_name(self, kategorienname: str):
+        
+        
+        try: 
+            kategorie = self.get_by_kategorienname(kategorienname)
+            
+        except AssertionError:
+            return
+    
+        self.delete(kategorie)
         
     def get_by_kategorienname(self, kategorienname: str) -> Kategorie:
         
@@ -321,6 +347,7 @@ class KategorieRepository(BaseRepository):
             list_of_kategorien.append(kategorie)
             
         return list_of_kategorien     
+    
 
 class DatabaseModule(Module):
     

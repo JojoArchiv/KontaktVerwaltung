@@ -24,6 +24,7 @@ class IntegrationsTest(unittest.TestCase):
         self.DeleteKontakt()
         self.CreateTwoKontakteAndOneKategorie()
         self.FindBySpendeninformation()
+        self.ChangeKategorienname()
         self.tear_down_db()
         
     def CreateKontakt(self):
@@ -119,6 +120,24 @@ class IntegrationsTest(unittest.TestCase):
         spendeninformationen = kontakt.spendeninformationen
         self.assertEqual("Wiese", kontakt.nachname)
         self.assertEqual(2001, spendeninformationen[0].spendenjahr)     
+        
+    def ChangeKategorienname(self):
+        
+        kontakte_repository, kategorien_repository = self.reopen_session()
+        
+        kategorie = kategorien_repository.create(kategorienname="Testkategorie 1")
+        
+        id = kategorie.id
+        
+        kontakte_repository, kategorien_repository = self.reopen_session()
+        
+        selected_kategorie = kategorien_repository.get(id)
+        selected_kategorie.kategorienname = "Testkategorie 2"
+        
+        kontakte_repository, kategorien_repository = self.reopen_session()
+        
+        kategorie = kategorien_repository.get(id)
+        self.assertEqual(kategorie.kategorienname, "Testkategorie 2")
 
     def setup_db(self): 
         

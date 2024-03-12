@@ -26,6 +26,14 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(547, 543)
+        self.actionKategorie_anlegen = QAction(MainWindow)
+        self.actionKategorie_anlegen.setObjectName(u"actionKategorie_anlegen")
+        self.actionKategorie_bearbeiten = QAction(MainWindow)
+        self.actionKategorie_bearbeiten.setObjectName(u"actionKategorie_bearbeiten")
+        self.actionKategorie_l_schen = QAction(MainWindow)
+        self.actionKategorie_l_schen.setObjectName(u"actionKategorie_l_schen")
+        self.actionKontakt_anlegen = QAction(MainWindow)
+        self.actionKontakt_anlegen.setObjectName(u"actionKontakt_anlegen")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
@@ -85,6 +93,13 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuDatei.menuAction())
         self.menubar.addAction(self.menuBearbeiten.menuAction())
+        self.menuBearbeiten.addAction(self.actionKategorie_anlegen)
+        self.menuBearbeiten.addSeparator()
+        self.menuBearbeiten.addAction(self.actionKategorie_bearbeiten)
+        self.menuBearbeiten.addSeparator()
+        self.menuBearbeiten.addAction(self.actionKategorie_l_schen)
+        self.menuBearbeiten.addSeparator()
+        self.menuBearbeiten.addAction(self.actionKontakt_anlegen)
 
         self.retranslateUi(MainWindow)
 
@@ -93,6 +108,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.actionKategorie_anlegen.setText(QCoreApplication.translate("MainWindow", u"Kategorie anlegen", None))
+        self.actionKategorie_bearbeiten.setText(QCoreApplication.translate("MainWindow", u"Kategorie bearbeiten", None))
+        self.actionKategorie_l_schen.setText(QCoreApplication.translate("MainWindow", u"Kategorie l\u00f6schen", None))
+        self.actionKontakt_anlegen.setText(QCoreApplication.translate("MainWindow", u"Kontakt anlegen", None))
         self.searchButton.setText(QCoreApplication.translate("MainWindow", u"Suchen", None))
         self.NaechsteSeiteButton.setText(QCoreApplication.translate("MainWindow", u"n\u00e4chste Seite", None))
         self.VorherigeSeiteButton.setText(QCoreApplication.translate("MainWindow", u"vorherige Seite", None))

@@ -24,14 +24,14 @@ class Test(unittest.TestCase):
         self.session.close()
 
 
-    def notestCreate(self):
+    def testCreate(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         self.assertTrue(kategorie is not None)
         self.assertTrue(isinstance(kategorie, Kategorie))
         self.assertTrue(kategorie.id is not None)
 
-    def notestGet(self):
+    def testGet(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         kategorie2 = self.kategorien_service.get(kategorie.id)
@@ -41,7 +41,7 @@ class Test(unittest.TestCase):
         self.assertEqual(kategorie.id, kategorie2.id)
         self.assertEqual(kategorie, kategorie2)
         
-    def notestFindAllKategorien(self):
+    def testFindAllKategorien(self):
         
         kategorie1 = self.kategorien_service.create(kategorienname="Spender_in")
         kategorie2 = self.kategorien_service.create(kategorienname="Fördermitglied")
@@ -66,7 +66,7 @@ class Test(unittest.TestCase):
         self.assertEqual(kategorien_liste.kategorienname, "Spender_in")
         self.assertEqual(kategorien_liste.id, 1)
     
-    def notestGetFailsOnNotExistingID(self):
+    def testGetFailsOnNotExistingID(self):
 
         exception_thrown = False
         try:        
@@ -76,7 +76,7 @@ class Test(unittest.TestCase):
             
         self.assertTrue(exception_thrown)
 
-    def notestGetFailsOnNone(self):
+    def testGetFailsOnNone(self):
 
         exception_thrown = False
         try:        
@@ -86,7 +86,7 @@ class Test(unittest.TestCase):
             
         self.assertTrue(exception_thrown)
 
-    def notestDelete(self):
+    def testDelete(self):
         
         kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
         self.kategorien_service.get(kategorie.id)
@@ -98,7 +98,26 @@ class Test(unittest.TestCase):
         except IllegalIdException as e:
             exception_thrown = True
         
+        self.assertTrue(exception_thrown)    
+        
+    def testDeleteByName(self):
+        
+        kategorie = self.kategorien_service.create(kategorienname="Meine Kategorie")
+        self.kategorien_service.get(kategorie.id)
+        self.kategorien_service.delete_by_name("Meine Kategorie")
+        
+        exception_thrown = False
+        try:
+            self.kategorien_service.get(kategorie.id)
+        except IllegalIdException as e:
+            exception_thrown = True
+        
         self.assertTrue(exception_thrown)       
+    
+    def testDeleteByNameFailing(self):
+        
+        self.kategorien_service.delete_by_name("nicht existierende kategorie")
+   
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
