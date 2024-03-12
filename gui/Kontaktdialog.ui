@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
-    <height>469</height>
+    <width>602</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>551</width>
-     <height>401</height>
+     <width>571</width>
+     <height>411</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -243,7 +243,7 @@
         <rect>
          <x>290</x>
          <y>0</y>
-         <width>89</width>
+         <width>101</width>
          <height>20</height>
         </rect>
        </property>
@@ -256,6 +256,28 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>VornamenInput</tabstop>
+  <tabstop>NachnameInput</tabstop>
+  <tabstop>MailadresseInput</tabstop>
+  <tabstop>female</tabstop>
+  <tabstop>male</tabstop>
+  <tabstop>divers</tabstop>
+  <tabstop>unknown</tabstop>
+  <tabstop>TelefonDropdown</tabstop>
+  <tabstop>StrasseInput</tabstop>
+  <tabstop>HausnummerInput</tabstop>
+  <tabstop>WohnortInput</tabstop>
+  <tabstop>PLZInput</tabstop>
+  <tabstop>LandInput</tabstop>
+  <tabstop>SpendenInput</tabstop>
+  <tabstop>BankdatenInput</tabstop>
+  <tabstop>KategorieDropdown</tabstop>
+  <tabstop>TelefonnumerLoeschen</tabstop>
+  <tabstop>TelefonHinzufuegen</tabstop>
+  <tabstop>KategorieLoeschen</tabstop>
+  <tabstop>KategorieHinzufuegen</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
