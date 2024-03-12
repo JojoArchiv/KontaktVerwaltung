@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>547</width>
+    <height>543</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="searchFeld"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="searchButton">
+          <property name="text">
+           <string>Suchen</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QComboBox" name="KategorienComboBox"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="NaechsteSeiteButton">
+      <property name="text">
+       <string>nächste Seite</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="VorherigeSeiteButton">
+      <property name="text">
+       <string>vorherige Seite</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>547</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuBearbeiten">
+    <property name="title">
+     <string>Bearbeiten</string>
+    </property>
+    <addaction name="actionKategorie_anlegen"/>
+    <addaction name="separator"/>
+    <addaction name="actionKategorie_bearbeiten"/>
+    <addaction name="separator"/>
+    <addaction name="actionKategorie_l_schen"/>
+    <addaction name="separator"/>
+    <addaction name="actionKontakt_anlegen"/>
+   </widget>
+   <addaction name="menuDatei"/>
+   <addaction name="menuBearbeiten"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionKategorie_anlegen">
+   <property name="text">
+    <string>Kategorie anlegen</string>
+   </property>
+  </action>
+  <action name="actionKategorie_bearbeiten">
+   <property name="text">
+    <string>Kategorie bearbeiten</string>
+   </property>
+  </action>
+  <action name="actionKategorie_l_schen">
+   <property name="text">
+    <string>Kategorie löschen</string>
+   </property>
+  </action>
+  <action name="actionKontakt_anlegen">
+   <property name="text">
+    <string>Kontakt anlegen</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

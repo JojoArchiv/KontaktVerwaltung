@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KontaktDialog</class>
+ <widget class="QDialog" name="KontaktDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>584</width>
+    <height>469</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>430</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>551</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="VornamenInput"/>
+    </item>
+    <item row="5" column="1">
+     <widget class="QComboBox" name="TelefonDropdown"/>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="HausnummerInput"/>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="PLZInput"/>
+    </item>
+    <item row="12" column="1">
+     <widget class="QLineEdit" name="BankdatenInput"/>
+    </item>
+    <item row="5" column="2">
+     <widget class="QPushButton" name="TelefonnumerLoeschen">
+      <property name="text">
+       <string>Löschen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3">
+     <widget class="QPushButton" name="TelefonHinzufuegen">
+      <property name="text">
+       <string>Hinzufügen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="Hausnummer">
+      <property name="text">
+       <string>Hausnummer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="PLZ">
+      <property name="text">
+       <string>PLZ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="Telefonnummer">
+      <property name="text">
+       <string>Telefonnummern</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="Spendeninformationen">
+      <property name="text">
+       <string>Spendeninformationen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="3">
+     <widget class="QPushButton" name="KategorieHinzufuegen">
+      <property name="text">
+       <string>Hinzufügen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="Gender">
+      <property name="text">
+       <string>Gender</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="StrasseInput"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="Vornamen">
+      <property name="text">
+       <string>Vornamen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="1">
+     <widget class="QComboBox" name="KategorieDropdown"/>
+    </item>
+    <item row="13" column="2">
+     <widget class="QPushButton" name="KategorieLoeschen">
+      <property name="text">
+       <string>Löschen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="MailadresseInput"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="Strasse">
+      <property name="text">
+       <string>Straße</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QLineEdit" name="SpendenInput"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="Mailadresse">
+      <property name="text">
+       <string>Mailadresse</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QLabel" name="Land">
+      <property name="text">
+       <string>Land</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="1">
+     <widget class="QLineEdit" name="LandInput"/>
+    </item>
+    <item row="12" column="0">
+     <widget class="QLabel" name="Bankdaten">
+      <property name="text">
+       <string>Bankdaten</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QLabel" name="Kategorie">
+      <property name="text">
+       <string>Kategorie</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="WohnortInput"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="NachnameInput"/>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="Wohnort">
+      <property name="text">
+       <string>Wohnort</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="Nachname">
+      <property name="text">
+       <string>Nachname</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1" colspan="3">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QRadioButton" name="female">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Frau</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="male">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>0</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Mann</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="divers">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>0</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Divers</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="unknown">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>0</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Unbekannt</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>KontaktDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>KontaktDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
