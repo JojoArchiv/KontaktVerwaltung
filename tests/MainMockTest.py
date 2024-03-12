@@ -190,7 +190,7 @@ class MainMockTest(unittest.TestCase):
         kontakt.id = 42
         self.kontakte_repository.create.return_value = kontakt
             
-        self.controller.kontakt_anlegen(text_inputs, adresse_inputs, [rb1, rb2])
+        self.controller.create_kontakt_from_input(text_inputs, adresse_inputs, [rb1, rb2])
         self.kontakte_repository.create.assert_called_once_with(nachname='nachname',
                                                                 vornamen='vornamen',
                                                                 mailadresse='mailadresse',

@@ -16,6 +16,7 @@ from JoJo.KontaktVerwaltung.KategorieLoeschen import Ui_Kategorie_loeschen
 from JoJo.KontaktVerwaltung.KategorieBearbeiten import Ui_Kategorie_bearbeiten
 from JoJo.KontaktVerwaltung.Kontaktdialog import Ui_KontaktDialog
 from JoJo.KontaktVerwaltung.Domain import GenderTypes, Kontakt
+from JoJo.KontaktVerwaltung.KategorieAuswaehlenDialog import Ui_KategorieAuswaehlen
 
 
 @singleton
@@ -124,10 +125,11 @@ class Controller():
             line_edit_widget.setText("")
         
             
-    def kontakt_anlegen(self,
+    def create_kontakt_from_input(self,
                         text_inputs,
                         adresse_inputs,
-                        radio_buttons
+                        radio_buttons,
+                        kategorie_dropdown
                         ):
         
         kw_params = {}
@@ -149,12 +151,18 @@ class Controller():
         
         self.kontakte_repository.createAdresse(**kw_params)
         
+        for kategorie_index in range(0, kategorie_dropdown.count()):
+            kategorie_text = kategorie_dropdown.itemText(kategorie_index)
+            kategorie = self.kategory_repository.get_by_kategorienname(kategorie_text)
+            kontakt.kategorien.append(kategorie)
+        
         return kontakt
     
-    def kontakt_init(self,
+    def init_kontakt_dialog_from_kontakt(self,
                      text_inputs,
                      adresse_inputs,
                      radio_buttons,
+                     kategorie_dropdown,
                      kontakt: Kontakt):
         
         for key in text_inputs.keys():
@@ -169,11 +177,16 @@ class Controller():
         for radio_button in radio_buttons:
             radio_button.setChecked(kontakt.gender == radio_button.gender)
         
+        while kategorie_dropdown.count() > 0:
+            kategorie_dropdown.removeItem(kategorie_dropdown.count() - 1)
+        for kategorie in kontakt.kategorien:
+            kategorie_dropdown.addItem(kategorie.kategorienname)
     
-    def kontakt_bearbeiten(self,
+    def update_kontakt_from_dialog(self,
                            text_inputs,
                            adresse_inputs,
                            radio_buttons,
+                           kategorie_dropdown,
                            kontakt: Kontakt
                            ):
 
@@ -191,10 +204,33 @@ class Controller():
                 kontakt.gender = radio_button.gender
                 break
 
+        kategorien = []
+        for kategorie_index in range(0, kategorie_dropdown.count()):
+            kategorie_text = kategorie_dropdown.itemText(kategorie_index)
+            kategorie = self.kategory_repository.get_by_kategorienname(kategorie_text)
+            kategorien.append(kategorie)
+            if kategorie not in kontakt.kategorien:
+                kontakt.kategorien.append(kategorie)
+        for kategorie in kontakt.kategorien:
+            if kategorie not in kategorien:
+                kontakt.kategorien.remove(kategorie)
+
+@singleton
+class KategorieAuswaehlenDialog(Ui_KategorieAuswaehlen, QDialog):
+    
+    def __init__(self):
+        QDialog.__init__(self)
+        self.setupUi(self)
+        
 @singleton
 class KontaktDialog(Ui_KontaktDialog, QDialog):
     
-    def __init__(self):
+    @inject
+    def __init__(self, controller: Controller, kategorie_auswaehlen_dialog: KategorieAuswaehlenDialog):
+        
+        self.controller = controller
+        self.kategorie_auswaehlen_dialog = kategorie_auswaehlen_dialog
+        
         QDialog.__init__(self)
         self.setupUi(self)
 
@@ -203,8 +239,25 @@ class KontaktDialog(Ui_KontaktDialog, QDialog):
         self.male.gender = GenderTypes.MALE
         self.divers.gender = GenderTypes.DIVERS
         self.unknown.gender = GenderTypes.UNKNOWN
+        
+        self.KategorieHinzufuegen.pressed.connect(self.cb_kategorie_hinzufuegen)
+        self.KategorieLoeschen.pressed.connect(self.cb_kategorie_entfernen)
+        
+    def cb_kategorie_hinzufuegen(self):
+        
+        self.controller.fill_kategorie_dropdown(self.kategorie_auswaehlen_dialog.KategorieComboBox)
+        
+        result = self.kategorie_auswaehlen_dialog.exec()
+        
+        if result == QDialog.Accepted:
+            self.KategorieDropdown.addItem(self.kategorie_auswaehlen_dialog.KategorieComboBox.currentText())
+            
+    def cb_kategorie_entfernen(self):
+        
+        current_index = self.KategorieDropdown.currentIndex()
+        if current_index > -1:
+            self.KategorieDropdown.removeItem(current_index)
 
-    
 @singleton
 class KategorienDialog(Ui_KategorieAnlegenDialog, QDialog):
     
@@ -330,17 +383,19 @@ class MainGui(Ui_MainWindow, QMainWindow):
         if result != QDialog.Accepted:
             return
         
-        self.controller.kontakt_anlegen(self.kontakt_text_inputs,
+        self.controller.create_kontakt_from_input(self.kontakt_text_inputs,
                                         self.kontakt_adresse_inputs,
-                                        self.kontakt_dialog.radio_buttons)
+                                        self.kontakt_dialog.radio_buttons,
+                                        self.kontakt_dialog.KategorieDropdown)
 
         self.update_gui()
         
     def cb_kontakt_bearbeiten(self, table_item):
         
-        self.controller.kontakt_init(self.kontakt_text_inputs,
+        self.controller.init_kontakt_dialog_from_kontakt(self.kontakt_text_inputs,
                                      self.adresse_text_inputs,
                                      self.kontakt_dialog.radio_buttons,
+                                     self.kontakt_dialog.KategorieDropdown,
                                      table_item.kontakt)
         
         result = self.kontakt_dialog.exec()
@@ -348,9 +403,10 @@ class MainGui(Ui_MainWindow, QMainWindow):
         if result != QDialog.Accepted:
             return
         
-        self.controller.kontakt_bearbeiten(self.kontakt_text_inputs,
+        self.controller.update_kontakt_from_dialog(self.kontakt_text_inputs,
                                         self.adresse_text_inputs,
                                         self.kontakt_dialog.radio_buttons,
+                                        self.kontakt_dialog.KategorieDropdown,
                                         table_item.kontakt)
 
         self.update_gui()
